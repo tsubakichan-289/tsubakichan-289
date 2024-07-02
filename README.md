@@ -4,7 +4,9 @@
 </div>
 
 ```math
-\int
+(x+y)^n=\sum_{k=0}^n
+\begin{bmatrix} n \\ k \end{bmatrix}_{q}
+q^{k(n-k)}x^{n-k}y^k
 ```
 
 <!-- 2. プロフィールや連絡先を変更 -->
