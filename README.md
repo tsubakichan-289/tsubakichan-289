@@ -32,7 +32,7 @@ q^{k(n-k)}x^{n-k}y^k
   <img alt="Top Langs" height="170px" src="https://github-readme-stats.vercel.app/api?username=tsubakichan-289&theme=vue-dark&layout=compact" />
   <img alt="github stats" height="170px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=tsubakichan-289&theme=vue-dark&layout=compact" />
 </div>
-
+<a href="https://git.io/streak-stats"><img src="https://github-readme-streak-stats.herokuapp.com?user=tsubakichan-289&theme=dark" alt="GitHub Streak" /></a>
 
 <!--
 This repository is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
