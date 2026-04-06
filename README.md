@@ -16,6 +16,7 @@ q^{k(n-k)}x^{n-k}y^k
 - 🌱 I’m currently learning quantum group!
 <br>
 
+![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username={tsubakichan-289}&theme={2077})
 
 <!-- 3. 好きな技術スタックに変更 -->
 <!-- ライトモート：theme=light, ダークモート：theme=dark -->
