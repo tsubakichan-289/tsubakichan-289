@@ -1,0 +1,71 @@
+name: Profile Summary Cards
+
+on:
+  schedule:
+    # Every day at 09:17 JST (00:17 UTC).
+    - cron: '17 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-summary-cards-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate summary cards
+        uses: vn7n24fzkq/github-profile-summary-cards@release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          USERNAME: tsubakichan-289
+          UTC_OFFSET: '9'
+          THEME: '2077'
+          BRANCH_NAME: ${{ github.ref_name }}
+          # Validate all output before committing: upstream logs some errors
+          # without failing the action.
+          AUTO_PUSH: false
+
+      - name: Validate generated SVGs
+        shell: python
+        run: |
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          output = Path('profile-summary-card-output/2077')
+          filenames = (
+              '0-profile-details.svg',
+              '1-repos-per-language.svg',
+              '2-most-commit-language.svg',
+              '3-stats.svg',
+              '4-productive-time.svg',
+          )
+          for filename in filenames:
+              path = output / filename
+              root = ET.parse(path).getroot()
+              if root.tag != '{http://www.w3.org/2000/svg}svg':
+                  raise ValueError(f'Invalid SVG: {path}')
+              print(f'Validated {path}')
+
+      - name: Commit and push generated cards
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add profile-summary-card-output/
+          if git diff --cached --quiet; then
+            echo 'Summary cards are unchanged.'
+            exit 0
+          fi
+          git commit -m 'Update profile summary cards'
+          git push
